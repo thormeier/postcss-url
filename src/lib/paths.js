@@ -108,8 +108,13 @@ const getPathByBasePath = (basePath, dirFrom, relPath) => {
  * @param {Decl} decl
  * @returns {PostcssUrl~Asset}
  */
-const prepareAsset = (assetUrl, dir, decl) => {
-    const parsedUrl = url.parse(assetUrl);
+const prepareAsset = (assetUrl, dir, decl, options) => {
+    let parsedUrl = url.parse(assetUrl);
+
+    if (options.transformUrl) {
+        parsedUrl = options.transformUrl(parsedUrl)
+    }
+
     const pathname = !isUrlWithoutPathname(assetUrl) ? parsedUrl.pathname : null;
     const absolutePath = pathname
         ? path.resolve(path.join(dir.file, pathname))

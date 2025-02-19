@@ -83,7 +83,7 @@ const getPattern = (decl) =>
  * @returns {Promise<String|undefined>}
  */
 const replaceUrl = (url, dir, options, result, decl) => {
-    const asset = prepareAsset(url, dir, decl);
+    const asset = prepareAsset(url, dir, decl, options);
 
     const matchedOptions = matchOptions(asset, options);
 
