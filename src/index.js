@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 
 const declProcessor = require('./lib/decl-processor').declProcessor;
 
@@ -12,8 +13,11 @@ const plugin = (options) => {
         Once(styles, { result }) {
             const promises = [];
             const opts = result.opts;
-            const from = opts.from ? path.dirname(opts.from) : '.';
-            const to = opts.to ? path.dirname(opts.to) : from;
+
+            fs.lstatSync(opts.to).isDirectory()
+
+            const from = opts.from ? opts.from : '.';
+            const to = opts.to ? opts.to : from;
 
             styles.walkDecls((decl) =>
                 promises.push(declProcessor(from, to, options, result, decl))
